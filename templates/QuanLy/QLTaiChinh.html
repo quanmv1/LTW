@@ -1,0 +1,77 @@
+{% extends 'quanly.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        iframe {
+            display: block;
+            margin: 0 auto 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+    </style>
+
+    <h1>Quản lý tài chính</h1>
+    
+    <iframe title="HTTTQL" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=528e4baf-2e8b-45ec-9b83-99847c3d815a&autoAuth=true&embeddedDemo=false" frameborder="0" allowFullScreen="true"></iframe>
+    <button onclick="exportReport()">Xuất Báo Cáo</button>
+    
+    <script>
+    async function exportReport() {
+        const url =
+            "https://prod2-34.southeastasia.logic.azure.com:443/workflows/4c059a42198247c29d2fc14421a58285/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kecHlNJtLJKHoCG4cj_rdpbMECZwPQtYWrMSzLzRzBQ"; // Thay thế bằng URL từ Power Automate
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({}), // Nếu cần, bạn có thể gửi thêm dữ liệu tại đây
+            });
+
+            if (response.ok) {
+                const share_link_url = 'https://ptiteduvn-my.sharepoint.com/:w:/g/personal/truongnd_b20cn708_stu_ptit_edu_vn/EfK5ZdpAimBJtq70XVzgUoQBtrpZPu5b373fXK_cOltp-g?e=kMig6F';
+                window.open(share_link_url, '_blank');
+                alert('Xuất báo cáo thành công! Liên kết đến tệp báo cáo đã được mở trong cửa sổ mới.');
+            } else {
+                alert("Xuất báo cáo thất bại.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Đã xảy ra lỗi khi xuất báo cáo.");
+        }
+    }
+    </script>
+{% endblock %}
