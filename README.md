@@ -7,5 +7,5 @@
 pip install flask
 pip install flask-wtf
 
-## Tạo Database BTL_HTTTQL:
+## Tạo Database :
 Chạy file htql.sql
